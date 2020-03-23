@@ -300,34 +300,41 @@ def get_hex(input,nreversed=True):
 # ## Test class Cs
 def test_class():
     # X86_CODE64 = b"\x66\x2e\x0f\x1f\x84\x00\x00\x00\x00\x00"
-    # X86_CODE64 =b"\xf3\x48\xab"
+    #X86_CODE64 =\x41\x55\x41\x54"
     # # X86_CODE16 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6\x66\xe9\xb8\x00\x00\x00\x67\xff\xa0\x23\x01\x00\x00\x66\xe8\xcb\x00\x00\x00\x74\xfc"
     # # X86_CODE32 = b"\x8d\x4c\x32\x08\x01\xd8\x81\xc6\x34\x12\x00\x00\x05\x23\x01\x00\x00\x36\x8b\x84\x91\x23\x01\x00\x00\x41\x8d\x84\x39\x89\x67\x00\x00\x8d\x87\x89\x67\x00\x00\xb4\xc6\xe9\xea\xbe\xad\xde\xff\xa0\x23\x01\x00\x00\xe8\xdf\xbe\xad\xde\x74\xff"
 
-    # all_tests = [
+    all_tests = [
     #         # (CS_ARCH_X86, CS_MODE_16, X86_CODE16, "X86 16bit (Intel syntax)", None),
     #         # (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (AT&T syntax)", CS_OPT_SYNTAX_ATT),
     #         # (CS_ARCH_X86, CS_MODE_32, X86_CODE32, "X86 32 (Intel syntax)", None),
-    #         (CS_ARCH_X86, CS_MODE_64, X86_CODE64, "X86 64 (Intel syntax)", None),
-    #             ]
+             (CS_ARCH_X86, CS_MODE_64, b"\x48\x89\xe7", "X86 64 (Intel syntax)", None),
+			 (CS_ARCH_X86, CS_MODE_64, b"\xe8\x00\x00\x0d\x78", "X86 64 (Intel syntax)", None),
+			 (CS_ARCH_X86, CS_MODE_64, b"\x55", "X86 64 (Intel syntax)", None),
+			 (CS_ARCH_X86, CS_MODE_64, b"\x48\x89\xe5", "X86 64 (Intel syntax)", None),
+			 (CS_ARCH_X86, CS_MODE_64, b"\x41\x57", "X86 64 (Intel syntax)", None),
+			 (CS_ARCH_X86, CS_MODE_64, b"\x41\x56", "X86 64 (Intel syntax)", None),
+			 (CS_ARCH_X86, CS_MODE_64, b"\x41\x55", "X86 64 (Intel syntax)", None),
+			 (CS_ARCH_X86, CS_MODE_64, b"\x41\x54", "X86 64 (Intel syntax)", None),
+                 ]
 
 
-    all_tests=[]
-    path="/media/william/000B4BAB0003D134/WSL/compress/capstone/X86_hello_padded"
+    #all_tests=[]
+    #path="/media/william/000B4BAB0003D134/WSL/compress/capstone/X86_hello_padded"
     
-    with open(path, 'r') as f:
-        data=f.readlines()
-        for inst in data:
-            inst=inst.replace("0x","").replace('\n',"")
-            # if(len(inst)%2!=0):
-            #     inst='0'+inst
-            pattern = re.compile('.{2}')
-            inst='|'.join(pattern.findall(inst))
-            inst=list(inst.split('|'))
-            for i,val in enumerate(inst):
-                inst[i]=int(val,16)
-            inst=bytes(inst)
-            all_tests.append((CS_ARCH_X86, CS_MODE_64, inst, "X86 64 (Intel syntax)", None))
+    #with open(path, 'r') as f:
+        # data=f.readlines()
+        # for inst in data:
+            # inst=inst.replace("0x","").replace('\n',"")
+            # # if(len(inst)%2!=0):
+            # #     inst='0'+inst
+            # pattern = re.compile('.{2}')
+            # inst='|'.join(pattern.findall(inst))
+            # inst=list(inst.split('|'))
+            # for i,val in enumerate(inst):
+                # inst[i]=int(val,16)
+            # inst=bytes(inst)
+            # all_tests.append((CS_ARCH_X86, CS_MODE_64, inst, "X86 64 (Intel syntax)", None))
     
     with open("data/_X86_legacy", "w") as fleg:
         with open("data/_X86_prefix", "w") as fpre:
